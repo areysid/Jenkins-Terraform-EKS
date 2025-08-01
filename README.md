@@ -1,6 +1,6 @@
 # 🚀 Creation of EKS Cluster using Terraform
 
-In this tutorial, we will explore how to create an **Amazon EKS Cluster** using **Terraform** and integrate the process seamlessly with **Jenkins**.
+In this mini-project, we will explore how to create an **Amazon EKS Cluster** using **Terraform** and integrate the process seamlessly with **Jenkins**.
 
 ## 🛠️ Tools Used
 
