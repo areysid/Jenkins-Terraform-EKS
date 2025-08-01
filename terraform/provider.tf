@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 6.7"
+      version = "~> 5.0" # Downgraded to avoid unsupported blocks
     }
   }
 }
