@@ -3,45 +3,29 @@ module "eks" {
   version = "20.6.0"
 
   cluster_name                   = local.name
+  cluster_version                = "1.29"
   cluster_endpoint_public_access = true
-  cluster_version                = "1.33" # Adjust based on AWS EKS supported versions
 
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
-
-  vpc_id                   = module.vpc.vpc_id
-  subnet_ids               = module.vpc.private_subnets
-  control_plane_subnet_ids = module.vpc.intra_subnets
-
-  eks_managed_node_group_defaults = {
-    ami_type       = "AL2023_x86_64_STANDARD" # Changed from AL2_x86_64
-    instance_types = ["m5.large"]
-    attach_cluster_primary_security_group = true
-  }
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
-    sid-cluster-wg = {
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
+    default_node_group = {
+      instance_types = ["t3.medium"]
+      desired_size   = 2
+      min_size       = 1
+      max_size       = 3
 
-      instance_types = ["t3.large"]
-      capacity_type  = "SPOT"
+      capacity_type = "ON_DEMAND"
 
       tags = {
-        ExtraTag = "helloworld"
+        Name = "eks-default-node"
       }
     }
   }
 
-  tags = local.tags
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+  }
 }
