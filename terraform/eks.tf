@@ -1,9 +1,10 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.6.0" # stable version
+  version = "20.6.0"
 
   cluster_name                   = local.name
   cluster_endpoint_public_access = true
+  cluster_version                = "1.33" # Adjust based on AWS EKS supported versions
 
   cluster_addons = {
     coredns = {
@@ -22,9 +23,8 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.intra_subnets
 
   eks_managed_node_group_defaults = {
-    ami_type       = "AL2_x86_64"
+    ami_type       = "AL2023_x86_64_STANDARD" # Changed from AL2_x86_64
     instance_types = ["m5.large"]
-
     attach_cluster_primary_security_group = true
   }
 
